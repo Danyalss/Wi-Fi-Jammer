@@ -9,5 +9,5 @@ aircrack-ng
 ```bash
 $ git clone https://github.com/Danyalss/Jamer-WiFi-Danyal.git
 $ cd Jamer-WiFi-Danyal
-$ python3 
+$ python3 Danyal-gamer-wifi-fast.py
 ```
