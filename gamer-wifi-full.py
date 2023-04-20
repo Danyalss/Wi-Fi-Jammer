@@ -38,7 +38,6 @@ def attack(bssid, interface):
 bssid = scan_wifi()
 ch = find_ch(bssid)
 time.sleep(1) # Sleep for 1 seconds before running deauthentication attack
-Monitor()
 attack(bssid, interface)
 
 
