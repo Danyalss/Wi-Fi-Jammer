@@ -6,7 +6,7 @@
 **RUN THIS AS ROOT**
 
 ```bash
-$ git clone https://github.com/Danyalss/Jamer-WiFi.git
+$ git clone https://github.com/Danyalss/Wi-Fi-Jammer.git
 $ cd Jamer-WiFi-Danyal
 $ python3 Danyal-gamer-wifi-fast.py
 ```
