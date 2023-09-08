@@ -31,6 +31,12 @@ bssid_label.pack()
 bssid_entry = Entry(root)
 bssid_entry.pack()
 
+def scan_wifi():
+    interface = interface_entry.get()
+    os.system("airodump-ng " + interface) # Run airodump-ng for scanning
+    time.sleep(1) # Sleep for 1 seconds
+    os.system("pkill airodump-ng") # Stop airodump-ng after 1 seconds
+
 def bssid_help():
     scan_wifi()
 
